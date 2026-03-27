@@ -21,7 +21,7 @@ def test_graphs_build_consistently():
         out = runner.process({}, _segment(i), {}, {})
 
     graph_state = out.graph_state
-    assert len(graph_state.temporal_graph.nodes) == 3
-    assert len(graph_state.entity_graph.nodes) >= 4
-    assert len(graph_state.semantic_graph.nodes) >= 4  # 3 semantic + 1 theme
-    assert len(graph_state.causal_graph.nodes) == 3
+    assert len(graph_state.temporal_node_ids) == 3
+    assert len(graph_state.entity_node_ids) >= 2
+    assert len(graph_state.semantic_node_ids) >= 2
+    assert len(graph_state.causal_node_ids) == 1

@@ -200,12 +200,11 @@ def _reasoning_to_phase5_input(output: ReasoningOutput) -> Phase4Input:
 
 
 def _to_phase5_graph_state(output: ReasoningOutput) -> GraphState:
-    temporal = output.graph_state.temporal_graph.current_pacing_profile()
-    temporal_nodes = max(1, len(output.graph_state.temporal_graph.nodes))
-    semantic_density = float(len(output.graph_state.semantic_graph.nodes)) / temporal_nodes
-    causal_consistency = float(len(output.graph_state.causal_graph.edges)) / max(1, len(output.graph_state.causal_graph.nodes))
-    entity_persistence = float(len(output.graph_state.entity_graph.nodes)) / temporal_nodes
-    rhythm_consistency = 1.0 / (1.0 + abs(2.5 - temporal.get("avg_duration", 0.0)))
+    temporal_nodes = max(1, len(output.graph_state.temporal_node_ids))
+    semantic_density = float(len(output.graph_state.semantic_node_ids)) / temporal_nodes
+    causal_consistency = float(len(output.graph_state.causal_edge_ids)) / max(1, len(output.graph_state.causal_node_ids))
+    entity_persistence = float(len(output.graph_state.entity_node_ids)) / temporal_nodes
+    rhythm_consistency = 1.0 / (1.0 + abs(2.5 - output.graph_state.avg_segment_duration))
     return GraphState(
         semantic={"semantic_density": semantic_density},
         temporal={"rhythm_consistency": rhythm_consistency},
@@ -217,7 +216,7 @@ def _to_phase5_graph_state(output: ReasoningOutput) -> GraphState:
 def _to_phase5_narrative_state(output: ReasoningOutput) -> NarrativeState:
     emotional_intensity = min(1.0, float(output.narrative_state.tension_level))
     coherence = 1.0 if output.narrative_state.pacing_state == "steady" else 0.75
-    progression = min(1.0, len(output.graph_state.temporal_graph.nodes) / 10.0)
+    progression = min(1.0, len(output.graph_state.temporal_node_ids) / 10.0)
     return NarrativeState(progression=progression, tension=emotional_intensity, emotional_intensity=emotional_intensity, coherence=coherence)
 
 

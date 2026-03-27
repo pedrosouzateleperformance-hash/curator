@@ -27,17 +27,17 @@ class PipelineOrchestrator:
     """Orchestrates use-case execution and dependency wiring only."""
 
     def __init__(self, graph_schema_path: str = "data_structures/graph_schema.json") -> None:
-        from src.adapters import (
-            ContextReasoningAdapter,
+        from src.adapters.encoding.sequence_encoder_adapter import SequenceEncoderAdapter
+        from src.adapters.execution.local_execution import (
             LocalAudioGenerator,
             LocalCutter,
             LocalHapticModule,
             LocalSubtitleGenerator,
             LocalVideoGenerator,
-            PipelineIngestAdapter,
-            RuVectorGraphRepository,
-            SequenceEncoderAdapter,
         )
+        from src.adapters.graph.ruvector_graph_repository import RuVectorGraphRepository
+        from src.adapters.media.pipeline_ingest_adapter import PipelineIngestAdapter
+        from src.adapters.reasoning.context_reasoning_adapter import ContextReasoningAdapter
 
         graph = RuVectorGraphRepository()
         self.phase2 = Phase2IngestUseCase(PipelineIngestAdapter(graph_schema_path=graph_schema_path), graph)
