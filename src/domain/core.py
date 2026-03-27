@@ -70,9 +70,4 @@ class RenderPlan:
     scoring_breakdown: Mapping[str, float] = field(default_factory=dict)
 
 
-@dataclass(frozen=True)
-class SystemState:
-    context: NarrativeState
-    temporal: SequenceState
-    coherence: CoherenceMetrics
-    multiscale: MultiscaleProfile
+from src.domain.system_state import SystemState  # noqa: E402

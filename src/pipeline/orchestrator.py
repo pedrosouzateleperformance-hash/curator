@@ -13,6 +13,7 @@ from src.application.use_cases import (
     Phase7DecisionExecutionUseCase,
 )
 from src.domain.core import RenderPlan
+from src.domain.system_state import SystemState
 from src.utils.execution import execute_plan
 
 
@@ -62,19 +63,36 @@ class PipelineOrchestrator:
         budget: float = 0.5,
         frame_stride: int = 5,
     ) -> PipelineExecutionResult:
-        structured = self.phase2.execute(
+        state = SystemState()
+        ingest_transition = self.phase2.execute(
+            state,
             input_video=input_video,
             audio_wav_path=audio_wav_path,
             transcript_records=transcript_records,
             frame_stride=frame_stride,
         )
-        sequence_previous = self.phase3.execute(structured)
-        sequence_current = self.phase3.execute(structured)
-        narrative = self.phase4.execute(sequence_current)
-        coherence = self.phase5.execute(sequence_previous, sequence_current)
-        multiscale = self.phase6.execute(sequence_current, narrative)
+        state = ingest_transition.state
+        structured = ingest_transition.output
+
+        sequence_transition = self.phase3.execute(state, structured)
+        state = sequence_transition.state
+        sequence_current = sequence_transition.output
+
+        narrative_transition = self.phase4.execute(state, sequence_current)
+        state = narrative_transition.state
+        narrative = narrative_transition.output
+
+        coherence_transition = self.phase5.execute(state, sequence_current)
+        state = coherence_transition.state
+        coherence = coherence_transition.output
+
+        multiscale_transition = self.phase6.execute(state, sequence_current, narrative)
+        state = multiscale_transition.state
+        multiscale = multiscale_transition.output
+
         mode = self.router.execute(budget)
-        plan = self.phase7.execute(narrative, coherence, multiscale, mode)
+        decision_transition = self.phase7.execute(state, narrative, coherence, multiscale, mode)
+        plan = decision_transition.output
 
         execution_output = execute_plan(plan, self.cutter, self.audio, self.video, self.subtitles, self.haptic)
         return PipelineExecutionResult(render_plan=plan, execution_output=execution_output)
