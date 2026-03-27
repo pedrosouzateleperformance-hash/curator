@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mamba-Graph Phase 1 Graph Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["graph_id", "nodes", "edges"],
+  "properties": {
+    "graph_id": {"type": "string", "minLength": 1},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scene_id": {"type": "string"},
+        "description": {"type": "string"}
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "layer", "attributes"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "minLength": 1},
+          "layer": {"type": "string", "enum": ["heuristic", "narrative", "visual", "audio"]},
+          "attributes": {"type": "object"}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "layer", "source", "target", "weight", "attributes"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "minLength": 1},
+          "layer": {"type": "string", "enum": ["heuristic", "narrative", "visual", "audio"]},
+          "source": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "weight": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+          "attributes": {"type": "object"}
+        }
+      }
+    }
+  }
+}
