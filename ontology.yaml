@@ -1,0 +1,92 @@
+{
+  "ontology_version": "1.0.0",
+  "layers": [
+    "heuristic",
+    "narrative",
+    "visual",
+    "audio"
+  ],
+  "aliases": {
+    "murch": "Walter Murch editing criteria",
+    "katz": "Steven D. Katz continuity principles",
+    "chion": "Michel Chion audio-image coupling",
+    "gestalt": "Gestalt-inspired composition cues"
+  },
+  "node_types": {
+    "SHOT": {"layer": "visual", "required_attributes": ["shot_id"]},
+    "VISUAL_EVENT": {"layer": "visual", "required_attributes": ["event_id", "time_index"]},
+    "AUDIO_EVENT": {"layer": "audio", "required_attributes": ["event_id", "time_index", "audio_class"]},
+    "NARRATIVE_EVENT": {"layer": "narrative", "required_attributes": ["event_id", "time_index"]},
+    "ENTITY": {"layer": "narrative", "required_attributes": ["entity_id", "entity_type"]},
+    "MEMORY_VIEW": {
+      "layer": "narrative",
+      "required_attributes": ["view_type"],
+      "allowed_values": {
+        "view_type": ["semantic", "temporal", "causal", "entity"]
+      }
+    },
+    "HEURISTIC_RULE": {"layer": "heuristic", "required_attributes": ["rule_id"]}
+  },
+  "edge_types": {
+    "CUT": {
+      "layer_scope": ["heuristic"],
+      "source_types": ["SHOT"],
+      "target_types": ["SHOT"],
+      "required_attributes": ["murch_scores", "continuity", "katz_logical_inference"]
+    },
+    "AUDIO_IMAGE_ALIGNMENT": {
+      "layer_scope": ["audio"],
+      "source_types": ["AUDIO_EVENT"],
+      "target_types": ["VISUAL_EVENT"],
+      "required_attributes": ["sync_score", "dialogue_prominence", "alignment_score"]
+    },
+    "NARRATIVE_TEMPORAL": {
+      "layer_scope": ["narrative"],
+      "source_types": ["NARRATIVE_EVENT"],
+      "target_types": ["NARRATIVE_EVENT"],
+      "required_attributes": ["delta_t"]
+    },
+    "NARRATIVE_CAUSAL": {
+      "layer_scope": ["narrative"],
+      "source_types": ["NARRATIVE_EVENT"],
+      "target_types": ["NARRATIVE_EVENT"],
+      "required_attributes": ["cause_strength"]
+    },
+    "MEMORY_MEMBERSHIP": {
+      "layer_scope": ["narrative"],
+      "source_types": ["MEMORY_VIEW"],
+      "target_types": ["NARRATIVE_EVENT", "ENTITY"],
+      "required_attributes": []
+    }
+  },
+  "weights": {
+    "murch": {
+      "emotion": 0.35,
+      "story": 0.25,
+      "rhythm": 0.15,
+      "eye_trace": 0.10,
+      "continuity_2d": 0.10,
+      "continuity_3d": 0.05
+    }
+  },
+  "constraints": {
+    "murch_min_cut_score": 0.70,
+    "audio_sync_min": 0.75,
+    "dialogue_prominence_min": 0.60,
+    "narrative_cause_min": 0.50,
+    "gestalt_min": {
+      "balance": 0.40,
+      "center_of_mass": 0.40,
+      "symmetry": 0.30,
+      "saliency": 0.50,
+      "visual_tension": 0.20
+    }
+  },
+  "rules": [
+    {"id": "R_MURCH_CUT_SCORE", "description": "Weighted Murch score must exceed threshold."},
+    {"id": "R_KATZ_CONTINUITY", "description": "Spatial, temporal, action continuity and logical inference must hold."},
+    {"id": "R_CHION_SYNC", "description": "Synchresis and dialogue prominence must satisfy thresholds."},
+    {"id": "R_NARRATIVE_COHERENCE", "description": "Temporal and causal narrative links must remain coherent."},
+    {"id": "R_LAYER_SEPARATION", "description": "Nodes and edges must stay in their declared ontology layers."}
+  ]
+}
