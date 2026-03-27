@@ -1,0 +1,117 @@
+{
+  "graph_id": "scene_001_transition",
+  "metadata": {
+    "scene_id": "scene_001",
+    "description": "Character opens door and enters room"
+  },
+  "nodes": [
+    {"id": "shot_a", "type": "SHOT", "layer": "visual", "attributes": {"shot_id": "A"}},
+    {"id": "shot_b", "type": "SHOT", "layer": "visual", "attributes": {"shot_id": "B"}},
+    {"id": "visual_open_door", "type": "VISUAL_EVENT", "layer": "visual", "attributes": {"event_id": "v1", "time_index": 10}},
+    {"id": "audio_door_click", "type": "AUDIO_EVENT", "layer": "audio", "attributes": {"event_id": "a1", "time_index": 10, "audio_class": "diegetic"}},
+    {"id": "narr_enter", "type": "NARRATIVE_EVENT", "layer": "narrative", "attributes": {"event_id": "n1", "time_index": 10}},
+    {"id": "narr_inside", "type": "NARRATIVE_EVENT", "layer": "narrative", "attributes": {"event_id": "n2", "time_index": 11}},
+    {"id": "entity_char", "type": "ENTITY", "layer": "narrative", "attributes": {"entity_id": "char_1", "entity_type": "character"}},
+    {"id": "memory_sem", "type": "MEMORY_VIEW", "layer": "narrative", "attributes": {"view_type": "semantic"}},
+    {"id": "memory_tmp", "type": "MEMORY_VIEW", "layer": "narrative", "attributes": {"view_type": "temporal"}},
+    {"id": "memory_cau", "type": "MEMORY_VIEW", "layer": "narrative", "attributes": {"view_type": "causal"}},
+    {"id": "memory_ent", "type": "MEMORY_VIEW", "layer": "narrative", "attributes": {"view_type": "entity"}}
+  ],
+  "edges": [
+    {
+      "id": "cut_1",
+      "type": "CUT",
+      "layer": "heuristic",
+      "source": "shot_a",
+      "target": "shot_b",
+      "weight": 0.9,
+      "attributes": {
+        "murch_scores": {
+          "emotion": 0.90,
+          "story": 0.86,
+          "rhythm": 0.80,
+          "eye_trace": 0.72,
+          "continuity_2d": 0.78,
+          "continuity_3d": 0.70
+        },
+        "continuity": {
+          "spatial": true,
+          "temporal": true,
+          "action": true
+        },
+        "katz_logical_inference": true
+      }
+    },
+    {
+      "id": "sync_1",
+      "type": "AUDIO_IMAGE_ALIGNMENT",
+      "layer": "audio",
+      "source": "audio_door_click",
+      "target": "visual_open_door",
+      "weight": 0.85,
+      "attributes": {
+        "sync_score": 0.92,
+        "dialogue_prominence": 0.72,
+        "alignment_score": 0.88
+      }
+    },
+    {
+      "id": "tmp_1",
+      "type": "NARRATIVE_TEMPORAL",
+      "layer": "narrative",
+      "source": "narr_enter",
+      "target": "narr_inside",
+      "weight": 0.8,
+      "attributes": {
+        "delta_t": 1
+      }
+    },
+    {
+      "id": "cause_1",
+      "type": "NARRATIVE_CAUSAL",
+      "layer": "narrative",
+      "source": "narr_enter",
+      "target": "narr_inside",
+      "weight": 0.8,
+      "attributes": {
+        "cause_strength": 0.84
+      }
+    },
+    {
+      "id": "mem_sem_1",
+      "type": "MEMORY_MEMBERSHIP",
+      "layer": "narrative",
+      "source": "memory_sem",
+      "target": "narr_enter",
+      "weight": 1.0,
+      "attributes": {}
+    },
+    {
+      "id": "mem_tmp_1",
+      "type": "MEMORY_MEMBERSHIP",
+      "layer": "narrative",
+      "source": "memory_tmp",
+      "target": "narr_inside",
+      "weight": 1.0,
+      "attributes": {}
+    },
+    {
+      "id": "mem_cau_1",
+      "type": "MEMORY_MEMBERSHIP",
+      "layer": "narrative",
+      "source": "memory_cau",
+      "target": "narr_inside",
+      "weight": 1.0,
+      "attributes": {}
+    },
+    {
+      "id": "mem_ent_1",
+      "type": "MEMORY_MEMBERSHIP",
+      "layer": "narrative",
+      "source": "memory_ent",
+      "target": "entity_char",
+      "weight": 1.0,
+      "attributes": {}
+    }
+  ]
+}
