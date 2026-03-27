@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from src.domain.core import NarrativeState, SequenceState
-from src.ports.graph import GraphRepositoryPort
+from src.ports.graph_repository_port import GraphRepositoryPort
 from src.ports.use_cases import ContextReasoningPort
 
 

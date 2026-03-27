@@ -1,6 +1,6 @@
 from src.ports.embedding import EmbeddingPort
 from src.ports.execution import AudioGenerationPort, CutterPort, HapticPort, SubtitlePort, VideoGenerationPort
-from src.ports.graph import GraphRepositoryPort
+from src.ports.graph_repository_port import GraphRepositoryPort
 from src.ports.media_io import MediaIngestPort
 from src.ports.use_cases import CoherencePort, ContextReasoningPort, DecisionExecutionPort, MultiscalePort, TemporalEncodingPort
 

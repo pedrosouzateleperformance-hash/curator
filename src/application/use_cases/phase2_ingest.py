@@ -5,7 +5,7 @@ from typing import Sequence
 from src.domain.core import StructuredData
 from src.domain.graph import GraphEdge, GraphNode
 from src.domain.system_state import ProbabilisticState, SystemState, TemporalState, TransitionResult
-from src.ports.graph import GraphRepositoryPort
+from src.ports.graph_repository_port import GraphRepositoryPort
 from src.ports.media_io import MediaIngestPort
 
 

@@ -28,11 +28,7 @@ class NarrativeStateTracker:
         entities = self.memory.retrieve_by_time(timestamp).node_ids
         unresolved = sorted(self.memory.unresolved_threads)
 
-        conflict_nodes = [
-            node_id
-            for node_id, node in graph_state.causal_graph.nodes.items()
-            if "conflict" in str(node.features.get("action", ""))
-        ]
+        conflict_nodes = [node_id for node_id in graph_state.causal_node_ids if "conflict" in node_id]
         tension = min(1.0, 0.15 * len(unresolved) + 0.2 * len(conflict_nodes))
 
         emotion = "neutral"
@@ -41,11 +37,10 @@ class NarrativeStateTracker:
         elif tension > 0.4:
             emotion = "rising_tension"
 
-        pacing = graph_state.temporal_graph.current_pacing_profile()
         pacing_state = "steady"
-        if pacing["avg_duration"] < 1.8:
+        if graph_state.avg_segment_duration < 1.8:
             pacing_state = "fast"
-        elif pacing["avg_duration"] > 4.5:
+        elif graph_state.avg_segment_duration > 4.5:
             pacing_state = "slow"
 
         phase = self._infer_phase(graph_state)
@@ -67,7 +62,7 @@ class NarrativeStateTracker:
         )
 
     def _infer_phase(self, graph_state: GraphState) -> str:
-        event_count = len(graph_state.causal_graph.nodes)
+        event_count = len(graph_state.causal_node_ids)
         unresolved = len(self.memory.unresolved_threads)
         if event_count < 3:
             return "setup"

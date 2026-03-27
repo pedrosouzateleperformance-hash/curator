@@ -3,7 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, List
 
+from src.adapters.graph.ruvector_graph_repository import RuVectorGraphRepository
 from src.memory.memory_orchestrator import GraphState, MemoryOrchestrator
+from src.ports.graph_repository_port import GraphRepositoryPort
 from src.reasoning.decision_engine import DecisionCandidate, DecisionProposalEngine
 from src.reasoning.explanation_engine import ExplanationEngine, ExplanationTrace
 from src.reasoning.narrative_tracker import NarrativeState, NarrativeStateTracker
@@ -20,8 +22,9 @@ class ReasoningOutput:
 class ReasoningRunner:
     """Phase 4 runner for MAGMA-style graph memory and reasoning."""
 
-    def __init__(self, active_window_size: int = 12) -> None:
-        self.memory = MemoryOrchestrator(active_window_size=active_window_size)
+    def __init__(self, graph_repository: GraphRepositoryPort | None = None, active_window_size: int = 12) -> None:
+        repository = graph_repository or RuVectorGraphRepository()
+        self.memory = MemoryOrchestrator(graph_repository=repository, active_window_size=active_window_size)
         self.narrative_tracker = NarrativeStateTracker(memory=self.memory)
         self.decision_engine = DecisionProposalEngine()
         self.explanation_engine = ExplanationEngine()
