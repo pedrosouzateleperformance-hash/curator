@@ -1,0 +1,11 @@
+{
+  "required_collections": {
+    "shots": ["id", "start_time", "end_time", "duration", "transition_type", "confidence"],
+    "scenes": ["id", "shot_ids", "start_time", "end_time", "dominant_entities"],
+    "frame_features": ["frame_id", "timestamp", "objects", "faces", "motion_vectors", "saliency_map", "composition_metrics"],
+    "audio_events": ["id", "start_time", "end_time", "type", "confidence"],
+    "utterances": ["id", "text", "start_time", "end_time", "speaker_id", "keywords", "trigger_words", "emotion_label"],
+    "entities": ["id", "type", "appearances", "associated_shots", "attributes"],
+    "alignment_edges": ["source", "target", "edge_type", "start_time", "end_time", "confidence"]
+  }
+}
