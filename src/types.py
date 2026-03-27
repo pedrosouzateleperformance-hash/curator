@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Mapping
 
 
 class ActionType(str, Enum):
@@ -36,14 +36,14 @@ class DecisionCandidate:
     action_type: ActionType
     timestamp: float
     graph_context: Mapping[str, float]
-    reasoning_path: List[str]
+    reasoning_path: list[str]
     metadata: Mapping[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
 class ExplanationTrace:
     trace_id: str
-    steps: List[str]
+    steps: list[str]
     confidence: float = 0.0
 
 
@@ -51,5 +51,5 @@ class ExplanationTrace:
 class Phase4Input:
     graph_state: GraphState
     narrative_state: NarrativeState
-    decision_candidates: List[DecisionCandidate]
-    explanation_trace: Optional[ExplanationTrace] = None
+    decision_candidates: list[DecisionCandidate]
+    explanation_trace: ExplanationTrace | None = None
