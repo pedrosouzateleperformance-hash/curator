@@ -1,0 +1,82 @@
+{
+  "video_metadata": {
+    "fps": 24.0,
+    "resolution": [1280, 720],
+    "frame_count": 240,
+    "duration": 10.0
+  },
+  "shots": [
+    {
+      "id": "shot_0000",
+      "start_time": 0.0,
+      "end_time": 3.0,
+      "duration": 3.0,
+      "transition_type": "start",
+      "confidence": 1.0
+    },
+    {
+      "id": "shot_0001",
+      "start_time": 3.0,
+      "end_time": 6.5,
+      "duration": 3.5,
+      "transition_type": "hard_cut",
+      "confidence": 0.92
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_000",
+      "shot_ids": ["shot_0000", "shot_0001"],
+      "start_time": 0.0,
+      "end_time": 6.5,
+      "dominant_entities": ["ent_0000", "ent_0001"],
+      "semantic_label": null
+    }
+  ],
+  "frame_features": [
+    {
+      "frame_id": 0,
+      "timestamp": 0.0,
+      "objects": [{"bbox": [110, 200, 300, 500], "label": "bright_region", "confidence": 0.5}],
+      "faces": [{"bbox": [410, 190, 500, 320], "track_id": "face_local_0"}],
+      "motion_vectors": [[0.0, 0.0]],
+      "saliency_map": [[0.1, 0.3], [0.4, 0.9]],
+      "composition_metrics": {"center_of_mass_x": 0.51, "center_of_mass_y": 0.47, "balance": 0.04}
+    }
+  ],
+  "audio_events": [
+    {"id": "audio_0000", "start_time": 0.0, "end_time": 2.2, "type": "music", "confidence": 0.8},
+    {"id": "audio_0001", "start_time": 2.2, "end_time": 4.8, "type": "speech", "confidence": 0.83}
+  ],
+  "utterances": [
+    {
+      "id": "utt_0000",
+      "text": "We have to run now.",
+      "start_time": 2.3,
+      "end_time": 3.4,
+      "speaker_id": "speaker_0",
+      "keywords": ["run"],
+      "trigger_words": ["run"],
+      "emotion_label": "negative"
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent_0000",
+      "type": "character",
+      "appearances": [{"start_time": 0.0, "end_time": 6.0}],
+      "associated_shots": ["shot_0000", "shot_0001"],
+      "attributes": {"last_bbox": [430, 185, 510, 330]}
+    }
+  ],
+  "alignment_edges": [
+    {
+      "source": "scene_000",
+      "target": "shot_0000",
+      "edge_type": "scene_contains_shot",
+      "start_time": 0.0,
+      "end_time": 3.0,
+      "confidence": 1.0
+    }
+  ]
+}
