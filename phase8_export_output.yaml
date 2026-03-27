@@ -1,0 +1,105 @@
+platform_outputs:
+  - platform: CINEMA
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+  - platform: TRAILER
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+  - platform: LONGFORM_STREAMING
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+  - platform: SHORT_VERTICAL
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+  - platform: EDUCATIONAL
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+  - platform: SOCIAL_SUMMARY
+    timeline: []
+    transformations: []
+    entropy_profile:
+      entropy_before: null
+      entropy_after: null
+      information_gain: null
+      compression_ratio: null
+      target_alignment: "unverified"
+    scale_profile:
+      micro_noise_removed: "unverified"
+      meso_structure_preserved: "unverified"
+      macro_coherence_preserved: "unverified"
+      fixed_points: []
+
+cross_platform_index:
+  entity_mapping: []
+  motif_mapping: []
+  narrative_anchors: []
+
+explanation: >
+  Transformation aborted at graph validation boundary. No input narrative graph was
+  provided, so node set V, edge set E, causal subgraph C, emotional trajectory vector,
+  and motif chain were undefined. Without these, temporal/visual/narrative/audio
+  operators are not traceable over graph topology and invariants cannot be proven.
+  Export requires a master graph with typed nodes (scene/entity/motif/audio beat),
+  directed causal edges, emotional weights, and platform entropy targets.
+
+final_status: failure
